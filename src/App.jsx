@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useRef, useEffect } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Box, List, IconButton, InputAdornment, OutlinedInput, Alert } from '@mui/material';
+import { List as ListIcon, AddCircle as AddIcon} from "@mui/icons-material"
+
+import Item from './components/item';
+
+export default function App(){
+  const [data, setData] = useState([
+    {id: 1, name: "Read books", done: false},
+    {id: 2, name: "Code X-app", done: false},
+    {id: 3, name: "Watch tutorials", done: false},
+    {id: 4, name: "Reset", done: true},
+  ]);
+
+  const inputRef = useRef();
+
+  const add = async name => {
+    const id = data.length + 1;
+    setData([...data, {id: id, name, done: false}]);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+		<Box>
+			<h1>Todo-List</h1>
+			<hr />
+			<form onSubmit={e => {
+        e.preventDefault();
+        const name = inputRef.current.value;
+        if(!name){
+          alert("Please fill a task");
+          return false;
+        }
+        add(name);
+        inputRef.current.value = "";
+        inputRef.current.focus();
+      }}>
+				<OutlinedInput
+					fullWidth
+					inputRef={inputRef}
+					endAdornment={
+						<IconButton type='submit'>
+							<AddIcon />
+						</IconButton>
+					} />
+			</form>
+			<ul>
+				{data
+					.filter((item) => !item.done)
+					.map((item) => {
+						return (
+							<Item
+								key={item.id}
+								item={item}
+							/>
+						);
+					})}
+			</ul>
+			<hr />
+			<ul>
+				{data
+					.filter((item) => item.done)
+					.map((item) => {
+						return (
+							<Item
+								key={item.id}
+								item={item}
+							/>
+						);
+					})}
+			</ul>
+		</Box>
+  );
 }
-
-export default App
