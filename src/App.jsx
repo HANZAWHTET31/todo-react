@@ -4,6 +4,7 @@ import { Box, List, IconButton, InputAdornment, OutlinedInput, Alert } from '@mu
 import { List as ListIcon, AddCircle as AddIcon} from "@mui/icons-material"
 
 import Item from './components/item';
+import Header from './Header';
 
 export default function App(){
   const [data, setData] = useState([
@@ -22,53 +23,54 @@ export default function App(){
 
   return (
 		<Box>
-			<h1>Todo-List</h1>
-			<hr />
-			<form onSubmit={e => {
-        e.preventDefault();
-        const name = inputRef.current.value;
-        if(!name){
-          alert("Please fill a task");
-          return false;
-        }
-        add(name);
-        inputRef.current.value = "";
-        inputRef.current.focus();
-      }}>
-				<OutlinedInput
-					fullWidth
-					inputRef={inputRef}
-					endAdornment={
-						<IconButton type='submit'>
-							<AddIcon />
-						</IconButton>
-					} />
-			</form>
-			<ul>
-				{data
-					.filter((item) => !item.done)
-					.map((item) => {
-						return (
-							<Item
-								key={item.id}
-								item={item}
-							/>
-						);
-					})}
-			</ul>
-			<hr />
-			<ul>
-				{data
-					.filter((item) => item.done)
-					.map((item) => {
-						return (
-							<Item
-								key={item.id}
-								item={item}
-							/>
-						);
-					})}
-			</ul>
+			<Header />
+
+			<Box sx={{mt: 3, padding: 5}}>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						const name = inputRef.current.value;
+						if (!name) return false;
+						add(name);
+						inputRef.current.value = "";
+						inputRef.current.focus();
+					}}>
+					<OutlinedInput
+						fullWidth
+						inputRef={inputRef}
+						endAdornment={
+							<IconButton type="submit">
+								<AddIcon />
+							</IconButton>
+						}
+					/>
+				</form>
+				<List>
+					{data
+						.filter((item) => !item.done)
+						.map((item) => {
+							return (
+								<Item
+									key={item.id}
+									item={item}
+								/>
+							);
+						})}
+				</List>
+				<hr />
+				<List>
+					{data
+						.filter((item) => item.done)
+						.map((item) => {
+							return (
+								<Item
+									key={item.id}
+									item={item}
+								/>
+							);
+						})}
+				</List>
+			</Box>
 		</Box>
   );
 }
