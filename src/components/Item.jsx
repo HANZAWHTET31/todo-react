@@ -18,7 +18,9 @@ export default function Item({item, remove, toggle}){
 			<ListItemText primary={item.name} />
 
 			<Link to={`/edit/${item._id}`}>
-				<EditIcon />
+				<IconButton>
+					<EditIcon />
+				</IconButton>
 			</Link>
 
 			<IconButton onClick={() => remove(item._id)}>

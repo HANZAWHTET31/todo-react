@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Edit from "./Edit";
 import Template from "./Template";
-// import Template from "./Template";
 
 const router = createBrowserRouter([
 	{

@@ -8,7 +8,7 @@ import {
 	LightMode as LightModeIcon,
 } from "@mui/icons-material";
 
-export default function Header({ count }) {
+export default function Header() {
 	const { mode, setMode } = useContext(AppContext);
 
 	return (
@@ -20,7 +20,7 @@ export default function Header({ count }) {
 
 				<Typography sx={{ flexGrow: 1, ml: 3 }}>
 					TODO-LIST
-					<Badge badgeContent={count} color="error" sx={{ m:2 }}></Badge>
+					{/* <Badge badgeContent={count} color="error" sx={{ m:2 }}></Badge> */}
 				</Typography>
 
 				{mode === "dark" ? (

@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { Box, List, IconButton, InputAdornment, OutlinedInput, Alert } from '@mui/material';
-import { List as ListIcon, AddCircle as AddIcon} from "@mui/icons-material"
-
+import { Box, List, IconButton, InputAdornment, OutlinedInput, Alert, Badge } from '@mui/material';
+import {
+	List as ListIcon,
+	AddCircle as AddIcon,
+} from "@mui/icons-material";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import Item from './components/item';
 
 export default function App(){
@@ -33,7 +36,20 @@ export default function App(){
 
   return (
 		<Box>
-			<Box sx={{mt: 3, padding: 5}}>
+			<Box sx={{ padding: 5 }}>
+				<h1>
+					Todo
+					<Badge
+						color="error"
+						badgeContent={
+							data.filter((item) => !item.done)
+							.length
+						}
+						sx={{m: 1}}
+						>
+						<AssignmentIcon />
+					</Badge>
+				</h1>
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
