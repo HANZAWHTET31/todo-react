@@ -4,27 +4,35 @@ import { Box, List, IconButton, InputAdornment, OutlinedInput, Alert } from '@mu
 import { List as ListIcon, AddCircle as AddIcon} from "@mui/icons-material"
 
 import Item from './components/item';
-import Header from './Header';
 
 export default function App(){
   const [data, setData] = useState([
-    {id: 1, name: "Read books", done: false},
-    {id: 2, name: "Code X-app", done: false},
-    {id: 3, name: "Watch tutorials", done: false},
-    {id: 4, name: "Reset", done: true},
+    {_id: 1, name: "Read books", done: false},
+    {_id: 2, name: "Code X-app", done: false},
+    {_id: 3, name: "Watch tutorials", done: false},
+    {_id: 4, name: "Reset", done: true},
   ]);
 
   const inputRef = useRef();
 
   const add = async name => {
     const id = data.length + 1;
-    setData([...data, {id: id, name, done: false}]);
-  }
+    setData([...data, {_id: id, name, done: false}]);
+  };
+
+  const remove = _id => {
+	setData(data.filter(item => item._id !== _id));
+  };
+
+  const toggle = _id => {
+	setData(data.map(item => {
+		if(item._id === _id) item.done = !item.done;
+		return item;
+	}));
+  };
 
   return (
 		<Box>
-			<Header />
-
 			<Box sx={{mt: 3, padding: 5}}>
 				<form
 					onSubmit={(e) => {
@@ -51,8 +59,10 @@ export default function App(){
 						.map((item) => {
 							return (
 								<Item
-									key={item.id}
+									key={item._id}
 									item={item}
+									remove={remove}
+									toggle={toggle}
 								/>
 							);
 						})}
@@ -64,8 +74,10 @@ export default function App(){
 						.map((item) => {
 							return (
 								<Item
-									key={item.id}
+									key={item._id}
 									item={item}
+									remove={remove}
+									toggle={toggle}
 								/>
 							);
 						})}
