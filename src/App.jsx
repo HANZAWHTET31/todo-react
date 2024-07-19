@@ -8,9 +8,8 @@ import {
 	OutlinedInput,
 	Alert,
 	Badge,
-	Typography,
 } from "@mui/material";
-import { List as ListIcon, AddCircle as AddIcon } from "@mui/icons-material";
+import { AddCircle as AddIcon } from "@mui/icons-material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Item from "./components/item";
 
@@ -48,12 +47,20 @@ export default function App() {
 	}, []);
 
 	const add = async (name) => {
-		const id = data.length + 1;
-		setData([...data, { _id: id, name, done: false }]);
+		const res = await fetch(`${api}`, {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({name}),
+		});
+		const item = res.json();
+		setData([...data, item]);
 	};
 
 	const remove = (_id) => {
 		setData(data.filter((item) => item._id !== _id));
+		fetch(`${api}/${_id}/delete`, {
+			method: "DELETE",
+		})
 	};
 
 	const toggle = (_id) => {
@@ -63,6 +70,9 @@ export default function App() {
 				return item;
 			}),
 		);
+		fetch(`${api}/${_id}/toggle`, {
+			method: "PUT"
+		});
 	};
 
 	return (
@@ -93,15 +103,17 @@ export default function App() {
 						fullWidth
 						inputRef={inputRef}
 						endAdornment={
-							<IconButton type="submit">
-								<AddIcon />
-							</IconButton>
+							<InputAdornment position="end">
+								<IconButton type="submit">
+									<AddIcon />
+								</IconButton>
+							</InputAdornment>
 						}
 					/>
 				</form>
 				{loading && (
 					<Alert sx={{ justifyContent: "center" }}>
-						<Typography>Loading......</Typography>
+						Loading......
 					</Alert>
 				)}
 				{hasError && (
