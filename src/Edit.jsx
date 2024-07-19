@@ -10,7 +10,7 @@ import {
 import { Save as SaveIcon } from "@mui/icons-material";
 import { lightBlue } from "@mui/material/colors";
 
-const api = "http://localhost:8888/tasks";
+const api = "http://localhost:8181/tasks";
 
 export default function Edit() {
 	const { id } = useParams();
@@ -44,8 +44,7 @@ export default function Edit() {
 						await fetch(`${api}/${id}`, {
 							method: "PUT",
 							headers: {
-								"Content-Type":
-									"application/json",
+								"Content-Type": "application/json",
 							},
 							body: JSON.stringify({ name }),
 						});
@@ -57,7 +56,7 @@ export default function Edit() {
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					endAdornment={
-						<InputAdornment>
+						<InputAdornment position="end">
 							<IconButton type="submit">
 								<SaveIcon />
 							</IconButton>
