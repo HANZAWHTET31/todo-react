@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../ThemedApp";
 
-import { AppBar, Toolbar, Typography, IconButton, Badge } from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import {
 	List as ListIcon,
 	DarkMode as DarkModeIcon,
@@ -13,12 +13,12 @@ import {
 export default function Header() {
 	const { mode, setMode } = useContext(AppContext);
 
-	const {pathName} = useLocation();
+	const { pathName } = useLocation();
 
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				{pathName === "/" ? (
+				{pathName === "/app" ? (
 					<IconButton>
 						<ListIcon />
 					</IconButton>

@@ -35,9 +35,7 @@ export default function App() {
 					const data = await res.json();
 					setData(data);
 					setLoading(false);
-					setHasError(false);
 				} else {
-					setLoading(false);
 					setHasError(true);
 				}
 			} catch (error) {
@@ -47,7 +45,7 @@ export default function App() {
 	}, []);
 
 	const add = async (name) => {
-		const res = await fetch(`${api}`, {
+		const res = await fetch(api, {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({name}),
